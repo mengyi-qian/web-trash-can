@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Trash</title>
+    <meta name="description" content="An image uploader">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="/style.css">
+    <script>
+      window.onload= async ()=>{
+        const displayTrash = async () => {
+          let data = await fetch('/list').then(response=>response.json())
+        
+          console.log(data)
+          
+          let input = document.querySelector('input')
+          // let download = document.querySelector('#download')
+          let trash = document.querySelector('#trash')
+          let mycanvas = document.querySelector('#mycanvas')
+          if (trash.className === "empty") {
+            // console.log("empty")
+            mycanvas.innerHTML = "Drop your trash into the trash can."
+            input.addEventListener('mouseenter', () => {
+              mycanvas.style.display = "block"
+            });
+            input.addEventListener('mouseout', () => {
+              mycanvas.style.display = "none"
+            });
+          }
+          // else {
+          //   // console.log("full")
+          //   mycanvas.innerHTML = "Empty the trash by clicking."
+          //   download.addEventListener('mouseenter', () => {
+          //     mycanvas.style.display = "block"
+          //   });
+          //   download.addEventListener('mouseout', () => {
+          //     mycanvas.style.display = "none"
+          //   });
+          // }
+          
+          if(data.length > 0) {
+            //something has been stored
+            let file = data[0].filepath
+            console.log(file)
+
+            document.querySelector("#trash").classList.remove("empty")
+            document.querySelector("#trash").classList.add("full")
+            document.querySelector("input,button").classList.add("hide")
+                        
+            let download = `<a id="download" href="${file}" download></a>`
+            document.querySelector("label").insertAdjacentHTML("beforeend", download)
+
+            let downloadButton = document.querySelector('#download')
+            mycanvas.innerHTML = "Empty the trash by clicking."
+            downloadButton.addEventListener('mouseenter', () => {
+              mycanvas.style.display = "block"
+            });
+            downloadButton.addEventListener('mouseout', () => {
+              mycanvas.style.display = "none"
+            });
+            
+            
+            document.querySelector("#download").addEventListener("click", async (e)=>{
+              // var audio = new Audio('https://cdn.glitch.com/d5c04b6f-97ab-47d6-b1d3-4f165f94771f%2F01%20One%20for%20Ghost.mp3?v=1607213736036');
+              let audio = document.querySelector("#empty")
+              audio.play()
+              
+              //animation
+              
+              async function refreshPage() {
+                
+                let removed = await fetch("/remove")
+                console.log("Deleted...")
+             
+                window.location.href = "/"
+              }
+              
+              setTimeout(refreshPage, 1000)
+              
+              
+
+            })
+
+          }
+
+
+        }
+        
+        
+        
+        
+        $("#image").click(function(e) {
+            e.preventDefault();
+        });
+        
+        // feature detection for drag&drop upload
+        var isAdvancedUpload = function() {
+          var div = document.createElement( 'div' );
+          return ( ( 'draggable' in div ) || ( 'ondragstart' in div && 'ondrop' in div ) ) && 'FormData' in window && 'FileReader' in window;
+        }();
+        
+        var $form = $('#imageUploader');
+
+        if (isAdvancedUpload) {
+          // $form.addClass('has-advanced-upload');
+          var droppedFiles = false;
+
+          $form.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+            // e.preventDefault();
+            e.stopPropagation();
+          })
+          .on('dragover dragenter', function() {
+            $form.addClass('is-dragover');
+          })
+          .on('dragleave dragend drop', function() {
+            $form.removeClass('is-dragover');
+          })
+          .on('drop', async function(e) {
+            droppedFiles = e.originalEvent.dataTransfer.files;
+    
+            console.log(droppedFiles)
+
+            let form = document.forms.namedItem("imageUploader")
+            
+            const formData = new FormData()
+            
+            formData.append('image', droppedFiles[0])
+            // formData.append("file", droppedFiles)
+            
+                      
+            
+            let submission = await fetch("/upload", {
+              method: 'POST',
+              body: formData
+            })
+            
+            console.log(submission)
+            
+            await displayTrash();
+            let audio = document.querySelector("#move")
+            audio.play()
+                        
+          });
+         
+          //change cursor use canvas
+          
+//           function Thing(x, y)
+//           {
+//           	this.x = x;
+//           	this.y = y;
+//           }
+          
+//           var mousePos = new Thing(0, 0);
+          
+//               mydiv = document.getElementById("mydiv");
+//                         mycanvas = document.getElementById("mycanvas");
+              
+//               mydiv.addEventListener('mousemove', function(event)
+//           	{
+//           		mousePos.x = event.clientX;
+//           		mousePos.y = event.clientY;
+                  
+//                   mycanvas.style.top = mousePos.y + "px";
+//                   mycanvas.style.left = mousePos.x + "px";
+//                   console.log(mycanvas.style);
+//           	}, false);
+                    
+        }
+        
+        
+ 
+        const routes = [
+            // {url:'/display',text:'List all file names'},
+            {url:'/display.html',text:'Preview all files with inline images'},
+            {url:'/list',text:'JSON list of all files, ordered by filename'},
+            // {url:'/listByTimestamp',text:'JSON list of all files, ordered by file timestamp'},
+            {url:'/remove',text:'Delete all images'}
+        ]
+
+        let routesListItems = ''
+
+        for(let route of routes ) {
+            routesListItems += `<li><a href="${route.url}">${route.text}</li>`
+        }
+
+        const routesList = `<ul>${routesListItems}</ul>`
+        // document.querySelector("nav").insertAdjacentHTML('beforeend', routesList)
+        
+        
+        
+        await displayTrash()
+        
+        
+        
+        
+        
+        
+ 
+      }
+    </script>
+
+    
+    
+  </head>
+  <body>    
+    
+<!--     <div id="trash" class="empty" ondrop="dropHandler(event)"></div> -->
+    
+    <form id="imageUploader" name="imageUploader" method="post" action="/upload" enctype="multipart/form-data">
+      <label id="trash" class="empty"></label>
+      <input type="file" name="image" id="image" data-multiple-caption="{count} files selected" multiple />
+      <button type="submit">Upload</button>
+    </form>
+    
+    <div id="mydiv">
+      <div id="mycanvas"></div>
+    </div>
+  
+    <audio id="move">
+        <source src="https://cdn.glitch.com/d5c04b6f-97ab-47d6-b1d3-4f165f94771f%2Fmove%20to%20trash_01.mp3?v=1607215840191">
+    </audio>
+    <audio id="empty">
+        <source src="https://cdn.glitch.com/d5c04b6f-97ab-47d6-b1d3-4f165f94771f%2Fempty%20trash_01.mp3?v=1607215631394">
+    </audio>
+    
+<!--     <form id="imageUploader" action="/upload" method="post" enctype="multipart/form-data">
+      <label for="image">Image to upload</label>
+      <input type="file" name="image" id="image" />
+      <label for="description">Description of the file</label>
+      <textarea name="description" id="description"></textarea>
+      <input type="submit" />
+    </form> -->
+    
+
+    <nav></nav>
+  </body>
+</html>

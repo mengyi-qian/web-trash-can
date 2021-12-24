@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Uploading images</title>
+    <meta name="description" content="An image uploader">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="stylesheet" href="/style.css">
+    <script>
+      window.onload= async ()=>{
+        let data = await fetch('/list').then(response=>response.json())
+
+        let output = ''
+        for(let item of data) {
+
+          let description = ''
+
+          if(item.meta.room != undefined) {
+            description = `${item.meta.description} in the ${item.meta.room}`
+          } else {
+            description = `${item.meta.description}`
+          }
+
+          output += `<li>
+            <h2>${item.name}</h2>
+            <img src="${item.filepath}" width="80%" height="auto" />
+            <p>${description}</p>
+          </li>`
+        }
+
+        const outputList = `<ul>${output}</ul>`
+
+        document.querySelector("body").insertAdjacentHTML("beforeend", outputList)
+        console.log(data)
+      }
+    </script>
+  </head>
+  <body>
+        
+    <h1>Images</h1>
+    
+  </body>
+</html>
