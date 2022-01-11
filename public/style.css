@@ -153,10 +153,13 @@ nav {
 #about-link-en:hover,
 #about-link-ch:hover,
 .border {
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
 }
 #about-en, #about-ch, #language {
   display: none;
+}
+#about-ch {
+  width: 420px;
 }
 #about-btn:hover + #language {
   display: inline;
