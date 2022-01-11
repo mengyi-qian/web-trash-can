@@ -7,17 +7,22 @@
   font-family: SF-Pro-Display-Light;
   src: url(https://cdn.glitch.com/d5c04b6f-97ab-47d6-b1d3-4f165f94771f%2FSF-Pro-Display-Light.otf?v=1607205210147);
 }
+@font-face{
+  font-family: SF-Mono-Regular;
+  src: url(https://cdn.glitch.global/d5c04b6f-97ab-47d6-b1d3-4f165f94771f/SF-Mono-Regular.otf?v=1641857128510);
+}
 body {
-  font-family: SF-Pro-Display-Light, sans-serif;
+  font-family: SF-Mono-Regular, sans-serif;
 }
 
 form {
-  width: 50vw;
+  width: 100vw;
   height: 100vh;
   position: absolute;
   margin: 0;
   top: 0;
-  left: 25vw;
+  left: 0;
+/*   left: 25vw; */
   overflow: hidden;  
 }
 
@@ -36,14 +41,14 @@ input, textarea {
 } */
 
 #trash {
-  width: 50vw; 
+  width: 100vw; 
   height: 100vh;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
   margin: 0;
-  top: 50px;
+/*   top: 50px; */
   left: 0;
   
 }
@@ -102,7 +107,7 @@ button[type="submit"] {
 }
 
 #download{
-  width: 50vw;
+  width: 100vw;
   height: 100vh;
   position: absolute;
   margin: 0;
@@ -132,3 +137,47 @@ nav {
   display: none;
   pointer-events: none;
 }
+
+#about {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 440px;
+  line-height: 1.5;
+  font-size: 14px;
+  z-index: 100;
+}
+#about a {
+  cursor: pointer;
+}
+#about-link-en:hover,
+#about-link-ch:hover,
+.border {
+  border-bottom: 2px solid black;
+}
+#about-en, #about-ch, #language {
+  display: none;
+}
+#about-btn:hover + #language {
+  display: inline;
+}
+
+#about ul {
+  list-style: none;
+  list-style-type: "-> ";
+}
+#about ul li {
+  margin-left: -.5rem;
+  margin-bottom: 1rem;
+}
+
+/* @media only screen and (max-width: 1440px) {
+  #about {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 1680px) {
+  #about {
+    font-size: 16px;
+  }
+} */

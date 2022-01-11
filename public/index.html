@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/script.js" defer></script>
     
     <link rel="stylesheet" href="/style.css">
     <script>
@@ -20,17 +21,17 @@
           let input = document.querySelector('input')
           // let download = document.querySelector('#download')
           let trash = document.querySelector('#trash')
-          let mycanvas = document.querySelector('#mycanvas')
-          if (trash.className === "empty") {
+          // let mycanvas = document.querySelector('#mycanvas')
+          // if (trash.className === "empty") {
             // console.log("empty")
-            mycanvas.innerHTML = "Drop your trash into the trash can."
-            input.addEventListener('mouseenter', () => {
-              mycanvas.style.display = "block"
-            });
-            input.addEventListener('mouseout', () => {
-              mycanvas.style.display = "none"
-            });
-          }
+            // mycanvas.innerHTML = "Drop your trash into the trash can."
+            // input.addEventListener('mouseenter', () => {
+            //   mycanvas.style.display = "block"
+            // });
+            // input.addEventListener('mouseout', () => {
+            //   mycanvas.style.display = "none"
+            // });
+          // }
           // else {
           //   // console.log("full")
           //   mycanvas.innerHTML = "Empty the trash by clicking."
@@ -51,17 +52,17 @@
             document.querySelector("#trash").classList.add("full")
             document.querySelector("input,button").classList.add("hide")
                         
-            let download = `<a id="download" href="${file}" download></a>`
+            let download = `<a id="download" href="${file}" title="empty trash can" download></a>`
             document.querySelector("label").insertAdjacentHTML("beforeend", download)
 
             let downloadButton = document.querySelector('#download')
-            mycanvas.innerHTML = "Empty the trash by clicking."
-            downloadButton.addEventListener('mouseenter', () => {
-              mycanvas.style.display = "block"
-            });
-            downloadButton.addEventListener('mouseout', () => {
-              mycanvas.style.display = "none"
-            });
+            // mycanvas.innerHTML = "Empty the trash by clicking."
+            // downloadButton.addEventListener('mouseenter', () => {
+            //   mycanvas.style.display = "block"
+            // });
+            // downloadButton.addEventListener('mouseout', () => {
+            //   mycanvas.style.display = "none"
+            // });
             
             
             document.querySelector("#download").addEventListener("click", async (e)=>{
@@ -212,12 +213,12 @@
     
     <form id="imageUploader" name="imageUploader" method="post" action="/upload" enctype="multipart/form-data">
       <label id="trash" class="empty"></label>
-      <input type="file" name="image" id="image" data-multiple-caption="{count} files selected" multiple />
+      <input type="file" name="image" id="image" data-multiple-caption="{count} files selected" title="drag & drop to upload" multiple />
       <button type="submit">Upload</button>
     </form>
     
     <div id="mydiv">
-      <div id="mycanvas"></div>
+<!--       <div id="mycanvas"></div> -->
     </div>
   
     <audio id="move">
@@ -234,6 +235,53 @@
       <textarea name="description" id="description"></textarea>
       <input type="submit" />
     </form> -->
+    
+    <div id="about">
+      <a id="about-btn">🔴</a> 
+      <span id="language">
+        <a id="about-link-en">about</a> / <a id="about-link-ch">关于</a>
+      </span>
+      <ul id="about-en">
+        <li>
+          trash-can.site is an online sharing trash can.
+        </li> 
+        <li>
+          Click to empty the trash can first before you can drag and drop your file into it. By emptying the trash can, the 'trash' file will be deleted from the trash can and downloaded into your computer.
+        </li> 
+        <li>
+          This is a very small trash can that can only hold up to one single file. You can drag and drop any file that is less than 250MB into the trash can. 
+        </li> 
+        <li>
+          It will take a few moments for your file to be uploaded successfully to the trash can depending on the size of your file. Try refreshing the page if your file didn't upload automatically.
+        </li> 
+        <li>
+          Trash-can.site does not generate content and is not responsible for any files it's holding. All the files you download from trash-can.site is from a previous visitor. So please beware of the file you drop into the website will become public and potentially downloaded by another visitor. Your cooperation on the principle of legality and publicity is essential to us.
+        </li> 
+        <li>
+          Website by Churong Mao
+        </li> 
+      </ul>
+      <ul id="about-ch">
+        <li>
+          trash-can.site是一个在线共享垃圾桶。
+        </li> 
+        <li>
+          请单击以先清空垃圾桶，然后才能将文件拖放到其中。通过清空垃圾桶，“垃圾”将从垃圾桶中删除并下载到您电脑中。
+        </li> 
+        <li>
+          这是一个非常小的垃圾桶，只能容纳一个文件。您可以将任何小于250MB的文件拖放到垃圾桶中。 
+        </li> 
+        <li>
+          根据文件的大小，您的文件成功上传到垃圾桶需要一些时间。如果您的文件没有自动上传，请尝试刷新页面。
+        </li> 
+        <li>
+          trash-can.site不生成任何内容，也不对存放其中的任何文件负责。您从trash-can.site下载的所有文件都来自于之前访问者的上传。因此，请注意您放入网站的文件将公开并可能被其他访问者下载。您在选择上传文件时自觉遵循合法的原则对我们至关重要。
+        </li> 
+        <li>
+          Website by Churong Mao
+        </li> 
+      </ul>
+    </div>
     
 
     <nav></nav>
