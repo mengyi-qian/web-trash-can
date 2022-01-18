@@ -30,7 +30,7 @@ exports.upload = (req, res, next) => {
   let fileNameExtension = fullFileName.split(".").pop()
 
   const filename = Buffer.from(`${timestamp}-${req.files.image.name}`).toString('base64') + `.${fileNameExtension}`;
-  req.files.image.mv(`/${filename}`);
+  req.files.image.mv(`./${filename}`);
   
   let fileData = {
     name: req.files.image.name,
