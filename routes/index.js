@@ -30,7 +30,7 @@ exports.upload = (req, res, next) => {
   let fileNameExtension = fullFileName.split(".").pop()
 
   const filename = Buffer.from(`${timestamp}-${req.files.image.name}`).toString('base64') + `.${fileNameExtension}`;
-  req.files.image.mv(`.data/${filename}`);
+  req.files.image.mv(`/${filename}`);
   
   let fileData = {
     name: req.files.image.name,
@@ -105,10 +105,10 @@ exports.listByFilename = async (req, res) => {
 exports.remove = (req, res) => {
   
   db.get("files").remove(()=>{return true}).write()
-  let images = fs.readdirSync('/app/.data/');
+  let images = fs.readdirSync('/');
   
   for(let image of images) {
-    fs.unlinkSync(`/app/.data/${image}`);
+    fs.unlinkSync(`/${image}`);
   }
   
   initializeDb()
