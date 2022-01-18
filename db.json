@@ -1,3 +1,12 @@
 {
-  "files": []
+  "files": [
+    {
+      "name": "hello.png",
+      "filetype": "png",
+      "filename": "MTY0MjUzOTQwMjkxOS1oZWxsby5wbmc=.png",
+      "filepath": "/img/MTY0MjUzOTQwMjkxOS1oZWxsby5wbmc=.png",
+      "timestamp": 1642539402919,
+      "meta": {}
+    }
+  ]
 }
